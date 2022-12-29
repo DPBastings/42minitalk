@@ -30,9 +30,11 @@ CFLAGS := -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(addprefix $(OBJ_DIR),$(OBJ_FILES))
+	$(MAKE) --directory=$(LIB_DIR)
 	$(CC) $(CFLAGS) -L$(LIB_DIR) $^ $(addprefix $(LIB_DIR),$(LIB_FILES)) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(addprefix $(HDR_DIR),$(HDR_FILES))
+	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I$(HDR_DIR) -I$(LIB_DIR) $< -c -o $@
 
 clean:

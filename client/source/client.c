@@ -2,6 +2,6 @@
 
 int	main(void)
 {
-	ft_printf("Hallo, ik ben een client.");
+	ft_printf("Hallo, ik ben een client.\n");
 	return (0);
 }

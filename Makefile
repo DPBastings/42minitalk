@@ -1,31 +1,29 @@
-CLIENT_EXE := client.exe
-SERVER_EXE := server.exe
+CLIENT_EXE := client
+SERVER_EXE := server
 EXE := $(CLIENT_EXE) $(SERVER_EXE)
 
 CLIENT_DIR := ./client/
 SERVER_DIR := ./server/
 
-.PHONY: all clean fclean re
+.PHONY: all $(addprefix $(CLIENT_DIR),$(CLIENT_EXE)) $(addprefix $(SERVER_DIR),$(SERVER_EXE)) clean fclean re
 
-all: $(EXE)
+all: $(addprefix $(CLIENT_DIR),$(CLIENT_EXE)) $(addprefix $(SERVER_DIR),$(SERVER_EXE))
 
-$(CLIENT_EXE):
-	@echo "Ik ga nu een client maken."
-	$(MAKE) --directory $(CLIENT_DIR)
-	ln -s $(CLIENT_DIR)$(CLIENT) $(CLIENT)
+$(addprefix $(CLIENT_DIR),$(CLIENT_EXE)):
+	@$(MAKE) --directory $(CLIENT_DIR)
+	@ln -fs $@ $(addsuffix .exe,$(CLIENT_EXE))
 
-$(SERVER_EXE):
-	@echo "Ik ga nu een server maken."
-	$(MAKE) --directory $(SERVER_DIR)
-	ln -s $(SERVER_DIR)$(SERVER) $(SERVER)
+$(addprefix $(SERVER_DIR),$(SERVER_EXE)):
+	@$(MAKE) --directory $(SERVER_DIR)
+	@ln -fs $@ $(addsuffix .exe,$(SERVER_EXE))
 	
 clean:
-	$(MAKE) --directory $(CLIENT_DIR) clean
-	$(MAKE) --directory $(SERVER_DIR) clean
+	@$(MAKE) --directory $(CLIENT_DIR) clean
+	@$(MAKE) --directory $(SERVER_DIR) clean
 
 fclean: clean
-	rm $(EXE)
-	$(MAKE) --directory $(CLIENT_DIR) fclean
-	$(MAKE) --directory $(SERVER_DIR) fclean
+	@rm -f $(addsuffix .exe,$(EXE))
+	@$(MAKE) --directory $(CLIENT_DIR) fclean
+	@$(MAKE) --directory $(SERVER_DIR) fclean
 
 re: fclean all
