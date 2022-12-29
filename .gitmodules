@@ -1,5 +1,5 @@
-[submodule "lib/ft_printf"]
-	path = lib/ft_printf
+[submodule "lib/libftprintf"]
+	path = lib/libftprintf
 	url = git@github.com:DPBastings/42printf.git
 [submodule "lib/libft"]
 	path = lib/libft
