@@ -1,7 +1,13 @@
+#include "server.h"
 #include "libftprintf.h"
+#include <sys/types.h>
+#include <unistd.h>
 
 int	main(void)
 {
-	ft_printf("Hallo, ik ben een server.\n");
+	pid_t	pid;
+	
+	pid = getpid();
+	ft_printf("Welcome to Minitalk! PID: [%d]\n", pid);
 	return (0);
 }
