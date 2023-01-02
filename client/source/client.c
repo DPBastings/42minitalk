@@ -9,8 +9,10 @@ int	main(int argc, char **argv)
 
 	if (argc == 3)
 	{
-		ft_printf("Transmitting string [%s] to server at [%d].\n", argv[2], argv[1]);
 		serverpid = ft_atoi(argv[1]);
+		ft_printf("Transmitting string [%s] to server at [%d].\n", argv[2], serverpid);
 	}
+	else
+		ft_printf("Usage: client [server PID] [string].\n");
 	return (0);
 }
