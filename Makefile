@@ -1,29 +1,29 @@
-CLIENT_EXE := client
-SERVER_EXE := server
-EXE := $(CLIENT_EXE) $(SERVER_EXE)
+define execute
+$(1)
 
-CLIENT_DIR := ./client/
-SERVER_DIR := ./server/
+endef
 
-.PHONY: all $(addprefix $(CLIENT_DIR),$(CLIENT_EXE)) $(addprefix $(SERVER_DIR),$(SERVER_EXE)) clean fclean re
+EXE_FILES := client server
+EXE_DIRS := $(EXE_FILES:%=./%/)
+EXE_PATH := $(foreach f,$(EXE_FILES),$(addprefix ./$(f)/,$(f)))
+LIB_DIR := ./lib/
 
-all: $(addprefix $(CLIENT_DIR),$(CLIENT_EXE)) $(addprefix $(SERVER_DIR),$(SERVER_EXE))
+.PHONY: all clean fclean lib re
 
-$(addprefix $(CLIENT_DIR),$(CLIENT_EXE)):
-	@$(MAKE) --directory $(CLIENT_DIR)
-	@ln -fs $@ $(addsuffix .exe,$(CLIENT_EXE))
+all: lib
+	$(foreach f,$(EXE_DIRS),$(call execute,$(MAKE) --directory=$(f)))
+	$(foreach e,$(EXE_PATH),$(call execute,@ln -fs $(e) $(addsuffix .exe,$(notdir $(e)))))
 
-$(addprefix $(SERVER_DIR),$(SERVER_EXE)):
-	@$(MAKE) --directory $(SERVER_DIR)
-	@ln -fs $@ $(addsuffix .exe,$(SERVER_EXE))
+lib:
+	$(MAKE) --directory=$(LIB_DIR)
 	
 clean:
-	@$(MAKE) --directory $(CLIENT_DIR) clean
-	@$(MAKE) --directory $(SERVER_DIR) clean
+	$(MAKE) --directory=$(LIB_DIR) clean
+	$(foreach p,$(EXE_DIRS),$(call execute,$(MAKE) --directory=$(p) clean))
 
 fclean: clean
-	@rm -f $(addsuffix .exe,$(EXE))
-	@$(MAKE) --directory $(CLIENT_DIR) fclean
-	@$(MAKE) --directory $(SERVER_DIR) fclean
+	@rm -f *.exe
+	$(MAKE) --directory $(LIB_DIR) clean
+	$(foreach p,$(EXE_DIRS),$(call execute,$(MAKE) --directory=$(p) fclean))
 
 re: fclean all

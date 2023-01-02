@@ -24,23 +24,26 @@ HDR_DIR := ./header/
 LIB_DIR	:= ../lib/
 
 CFLAGS ?= -Wall -Wextra -Werror
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean lib re
 
-all: $(NAME)
+all: lib $(NAME)
 
 $(NAME): $(addprefix $(OBJ_DIR),$(OBJ_FILES))
-	$(CC) $(CFLAGS) -L$(LIB_DIR) $^ $(addprefix $(LIB_DIR),$(LIB_FILES)) -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIB_DIR) $^ $(addprefix $(LIB_DIR),$(LIB_FILES)) -o $(NAME)
+
+lib:
+	$(MAKE) --directory=$(LIB_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(addprefix $(HDR_DIR),$(HDR_FILES))
-	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(HDR_DIR) -I$(LIB_DIR) $< -c -o $@
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -I$(HDR_DIR) -I$(LIB_DIR) $< -c -o $@
 
 clean:
-	rm -f $(OBJ_DIR)*.o
-	$(MAKE) --directory=$(LIB_DIR) clean
+	@rm -f $(OBJ_DIR)*.o
+	@$(MAKE) --directory=$(LIB_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 	$(MAKE) --directory=$(LIB_DIR) fclean
 
 re: fclean all
