@@ -1,4 +1,3 @@
-#include "server.h"
 #include "libftprintf.h"
 #include <sys/types.h>
 #include <unistd.h>
