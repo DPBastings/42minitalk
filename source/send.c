@@ -4,30 +4,30 @@
 #include <sys/types.h>
 #include <signal.h>
 
-void	send_bits(void *data, size_t width)
+//Check whether the destination process actually exists; throw an error if it doesn't.
+
+void	send_bytes(pid_t process, void *bytes, size_t n)
 {
 	size_t	index;
 	long	bits;
 
 	index = 0;
-	bits = *(long *)data;
-	while (index++ < width * 8)
+	bits = *(long *)bytes;
+	while (index++ < n * 8)
 	{
 		if (bits & 1)
-			ft_printf("1");
+			kill(process, SIGUSR2);
 		else
-			ft_printf("0");
+			kill(process, SIGUSR1);
 		bits >>= 1;
 	}
 }
 
-void	send(pid_t pid, char *data)
+void	send(pid_t process, t_packet *packet)
 {
-	size_t	len;
-
-	len = ft_strlen(data);
-	send_bits(&pid, sizeof(pid_t));
-	send_bits(&len, sizeof(size_t));
-	while (*data)
-		send_bits(data++, sizeof(char));
+	ft_printf("Transmitting string [%s] to server at [%d].\n", packet->data, process);
+	send_bytes(process, &(packet->self_pid), sizeof(pid_t));
+	send_bytes(process, &(packet->len), sizeof(size_t));
+	while (*(packet->data))
+		send_bytes(process, (packet->data)++, sizeof(char));
 }
