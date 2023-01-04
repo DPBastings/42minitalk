@@ -58,7 +58,7 @@ clean:
 	$(MAKE) --directory=$(LIB_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(CLT_NAME) $(SRV_NAME)
 	$(MAKE) --directory=$(LIB_DIR) fclean
 
 re: fclean all
