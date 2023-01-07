@@ -14,9 +14,11 @@ CLT_NAME := client
 SRV_NAME := server
 NAME := minitalk
 
-SRC_FILES_COMMON := send.c
+SRC_FILES_COMMON := byteops.c\
+	send.c
 OBJ_FILES_COMMON := $(SRC_FILES_COMMON:.c=.o)
-HDR_FILES := comm.h
+HDR_FILES := byteops.h\
+	comm.h
 LIB_FILES := libft.a\
 	libftprintf.a
 
@@ -24,7 +26,8 @@ SRC_FILES_CLT := $(SRC_FILES_COMMON)\
 	client.c
 OBJ_FILES_CLT := $(SRC_FILES_CLT:.c=.o)
 SRC_FILES_SRV := $(SRC_FILES_COMMON)\
-	server.c
+	server.c\
+	receive.c
 OBJ_FILES_SRV := $(SRC_FILES_SRV:.c=.o)
 
 SRC_DIR := ./source/

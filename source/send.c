@@ -1,33 +1,38 @@
 #include "comm.h"
+#include "byteops.h"
 #include "libft.h"
 #include "libftprintf.h"
+#include "limits.h"
 #include <sys/types.h>
 #include <signal.h>
+#include <unistd.h>
 
 //Check whether the destination process actually exists; throw an error if it doesn't.
 
-void	send_bytes(pid_t process, void *bytes, size_t n)
+void	send_bytes(pid_t process, void *bytes, size_t size)
 {
-	size_t	index;
-	long	bits;
+	unsigned char	*byte;
+	unsigned char	mask;
 
-	index = 0;
-	bits = *(long *)bytes;
-	while (index++ < n * 8)
+	byte = bytes;
+	while (size--)
 	{
-		if (bits & 1)
-			kill(process, SIGUSR2);
-		else
-			kill(process, SIGUSR1);
-		bits >>= 1;
+		mask = (1 << (CHAR_BIT - 1));
+		while (mask)
+		{
+			if (mask & *byte)
+				kill(process, SIGUSR2);
+			else
+				kill(process, SIGUSR1);
+			bitshift_r(&mask, sizeof(unsigned char));
+			usleep(75);
+		}
+		byte++;
 	}
 }
 
-void	send(pid_t process, t_packet *packet)
+void send(pid_t process, t_packet *packet)
 {
-	ft_printf("Transmitting string [%s] to server at [%d].\n", packet->data, process);
-	send_bytes(process, &(packet->self_pid), sizeof(pid_t));
-	send_bytes(process, &(packet->len), sizeof(size_t));
-	while (*(packet->data))
-		send_bytes(process, (packet->data)++, sizeof(char));
+	send_bytes(process, &packet->header, sizeof(t_pheader));
+	send_bytes(process, packet->data, packet->header.len);
 }
