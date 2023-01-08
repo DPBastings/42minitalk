@@ -12,9 +12,28 @@ void	inbox_process(void)
 {
 	ft_printf("%s\n", inbox->packet->data);
 	free(inbox->packet->data);
-	//usleep(50);
+	usleep(500);
 	kill(inbox->packet->header.origin, SIGUSR1);
 	inbox_init();
+}
+
+void	inbox_init(void)
+{
+	inbox->bits = 0;
+	ft_bzero(inbox->packet, sizeof(t_packet));
+}
+
+t_inbox *inbox_new(void)
+{
+	t_inbox *new;
+	
+	new = malloc(sizeof(t_inbox));
+	if (new == NULL)
+		return (NULL);
+	new->packet = malloc(sizeof(t_packet));
+	if (new->packet == NULL)
+		return (free(new), NULL);
+	return (new);
 }
 
 int	main(void)
