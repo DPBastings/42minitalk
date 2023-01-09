@@ -6,7 +6,7 @@
 #    By: dbasting <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/28 12:06:53 by dbasting      #+#    #+#                  #
-#    Updated: 2022/12/28 16:48:41 by dbasting      ########   odam.nl          #
+#    Updated: 2023/01/09 14:44:17 by dbasting      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ CFLAGS := -Wall -Wextra -Werror
 .PHONY: $(NAME) all bonus clean fclean lib re
 
 all: lib $(NAME)
+
+bonus: all
+	@echo "Bonus is basis, vrind."
 
 lib:
 	$(MAKE) --directory=$(LIB_DIR)
