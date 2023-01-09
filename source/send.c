@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   send.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dbasting <marvin@codam.nl>                   +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/01/09 12:48:51 by dbasting      #+#    #+#                 */
+/*   Updated: 2023/01/09 14:43:01 by dbasting      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "comm.h"
 #include "byteops.h"
 #include "libft.h"
 #include "libftprintf.h"
-#include "limits.h"
-#include <sys/types.h>
 #include <signal.h>
+#include <stdlib.h>
+#include <sys/types.h>
 #include <unistd.h>
-
-//Check whether the destination process actually exists; throw an error if it doesn't.
 
 void	send_bytes(pid_t process, void *bytes, size_t size)
 {
@@ -17,7 +27,7 @@ void	send_bytes(pid_t process, void *bytes, size_t size)
 	byte = bytes;
 	while (size--)
 	{
-		mask = (1 << (CHAR_BIT - 1));
+		mask = (1 << 7);
 		while (mask)
 		{
 			if (mask & *byte)
@@ -25,14 +35,16 @@ void	send_bytes(pid_t process, void *bytes, size_t size)
 			else
 				kill(process, SIGUSR1);
 			bitshift_r(&mask, sizeof(unsigned char));
-			usleep(25);
+			usleep(50);
 		}
 		byte++;
 	}
 }
 
-void send(pid_t process, t_packet *packet)
+void	send(pid_t process, t_packet *packet)
 {
+	if (kill(process, 0) == -1)
+		exit(EXIT_FAILURE);
 	send_bytes(process, &packet->header, sizeof(t_pheader));
 	send_bytes(process, packet->data, packet->header.len);
 }

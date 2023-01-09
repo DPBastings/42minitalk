@@ -1,1 +1,1 @@
-./libftprintf/headers/ft_printf.h
+libftprintf/headers/libftprintf.h
