@@ -35,7 +35,7 @@ OBJ_DIR := ./object/
 HDR_DIR := ./header/
 LIB_DIR	:= ./lib/
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -I$(LIB_DIR)
 
 .PHONY: $(NAME) all bonus clean fclean lib re
 

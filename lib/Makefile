@@ -1,25 +1,33 @@
-LIB_FILES := libft.a\
-	libftprintf.a
+LIB_NAMES := libft\
+	libftprintf
+LIB_ARCS := $(addsuffix .a,$(LIB_NAMES))
+LIB_DIRS := $(addprefix ./,$(addsuffix /,$(LIB_NAMES)))
+LIB_HDRS := $(addsuffix .h,$(LIB_NAMES))
+INC_DIR := include/
 
-.PHONY: all $(LIB_FILES) clean fclean re
+define execute
+$(1)
 
-all: $(LIB_FILES)
-	
-libft.a:
-	$(MAKE) --directory ./libft/
-	@ln -fs ./libft/libft.a ./libft.a
+endef
 
-libftprintf.a:
-	$(MAKE) --directory ./libftprintf/
-	@ln -fs ./libftprintf/libftprintf.a ./libftprintf.a
+.PHONY: all clean fclean re
+
+all: $(LIB_ARCS) $(LIB_HDRS)
+
+%.a:
+	$(MAKE) --directory=./$(basename $@)/
+	@ln -fs ./$(basename $@)/$@ ./$@
+
+%.h:
+	@$(if $(wildcard $(addsuffix $@,$(addsuffix $(INC_DIR),$(basename $@)/))),\
+		$(call execute,ln -fs ./$(addprefix $(basename $@)/$(INC_DIR),$@) $@),\
+		$(call execute,ln -fs ./$(addprefix $(basename $@)/,$@) $@))
 
 clean:
-	$(MAKE) --directory ./libft/ clean
-	$(MAKE) --directory ./libftprintf/ clean
+	$(foreach d,$(LIB_DIRS),$(call execute,-$(MAKE) --directory=$(d) clean))
 
 fclean: clean
-	@rm -f $(LIB_FILES)
-	$(MAKE) --directory ./libft/ fclean
-	$(MAKE) --directory ./libftprintf/ fclean
+	$(foreach d,$(LIB_DIRS),$(call execute,-$(MAKE) --directory=$(d) fclean))
+	@rm -f $(LIB_ARCS) $(LIB_HDRS)
 
 re: fclean all
