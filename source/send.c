@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:48:51 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/09 14:43:01 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 12:29:43 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	send_bytes(pid_t process, void *bytes, size_t size)
 			else
 				kill(process, SIGUSR1);
 			bitshift_r(&mask, sizeof(unsigned char));
-			usleep(50);
+			usleep(150);
 		}
 		byte++;
 	}
