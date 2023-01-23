@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:19:05 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/09 14:32:15 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 15:24:59 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static void	catch_header(int signum)
 		g_inbox->bits = 0;
 		g_inbox->packet->data = ft_calloc(header->len + 1, sizeof(char));
 		if (g_inbox->packet->data == NULL)
-			exit(EXIT_FAILURE);
+		{
+			free(g_inbox);
+			ft_exit("Error: couldn't allocate message buffer.", EXIT_FAILURE);
+		}
 	}
 }
 

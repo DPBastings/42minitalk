@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:48:51 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/23 12:29:43 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 15:23:29 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	send_bytes(pid_t process, void *bytes, size_t size)
 
 void	send(pid_t process, t_packet *packet)
 {
-	if (kill(process, 0) == -1)
-		exit(EXIT_FAILURE);
+	if (process == 0 || kill(process, 0) == -1)
+		ft_exit("Error: invalid server PID", EXIT_FAILURE);
 	send_bytes(process, &packet->header, sizeof(t_pheader));
 	send_bytes(process, packet->data, packet->header.len);
 }

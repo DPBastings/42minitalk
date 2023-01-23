@@ -6,7 +6,7 @@
 #    By: dbasting <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/28 12:06:53 by dbasting      #+#    #+#                  #
-#    Updated: 2023/01/09 14:44:17 by dbasting      ########   odam.nl          #
+#    Updated: 2023/01/23 15:12:53 by dbasting      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRV_NAME := server
 NAME := minitalk
 
 SRC_FILES_COMMON := byteops.c\
+	ft_exit.c\
 	send.c
 OBJ_FILES_COMMON := $(SRC_FILES_COMMON:.c=.o)
 HDR_FILES := byteops.h\
@@ -45,7 +46,7 @@ bonus: all
 	@echo "Bonus is basis, vrind."
 
 lib:
-	$(MAKE) --directory=$(LIB_DIR)
+	@$(MAKE) --directory=$(LIB_DIR)
 
 $(NAME): $(CLT_NAME) $(SRV_NAME)
 

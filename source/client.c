@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:15:54 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/09 12:15:56 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 15:21:20 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 		packet.data = argv[2];
 		send(server_pid, &packet);
 		if (!sleep(TIMEOUT))
-			ft_printf("Time out.\n");
+			ft_exit("Error: timeout.", EXIT_FAILURE);
 	}
 	else
 		ft_dprintf(2, "Usage: client [server PID] [string].\n");

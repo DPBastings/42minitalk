@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:44:34 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/09 12:45:17 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 15:43:53 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ int	main(void)
 {
 	pid_t	pid;
 
+	g_inbox = inbox_new();
+	if (g_inbox == NULL)
+		ft_exit("Error: couldn't allocate inbox.", EXIT_FAILURE);
+	inbox_init();
 	pid = getpid();
 	ft_printf("Welcome to Minitalk! PID: [%d]\n", pid);
-	g_inbox = inbox_new();
-	inbox_init();
 	receive();
 	return (0);
 }

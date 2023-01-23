@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:09:53 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/09 12:09:57 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/23 15:10:23 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ void		receive(void);
 t_inbox		*inbox_new(void);
 void		inbox_init(void);
 void		inbox_process(void);
+
+void		ft_exit(char const *message, int status);
 
 #endif
