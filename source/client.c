@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:15:54 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/23 15:21:20 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/27 12:27:17 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ int	main(int argc, char **argv)
 	pid_t			server_pid;
 	t_packet		packet;
 
-	if (argc == 3)
+	if (argc != 3)
+		mnt_error("Usage: client [server PID] [string].");
+	signal(SIGUSR1, catch_response);
+	server_pid = ft_atoi(argv[1]);
+	packet.header.origin = getpid();
+	packet.header.len = ft_strlen(argv[2]);
+	packet.data = argv[2];
+	if (argv[2][0] != '\0')
 	{
-		signal(SIGUSR1, catch_response);
-		server_pid = ft_atoi(argv[1]);
-		packet.header.origin = getpid();
-		packet.header.len = ft_strlen(argv[2]);
-		packet.data = argv[2];
 		send(server_pid, &packet);
 		if (!sleep(TIMEOUT))
-			ft_exit("Error: timeout.", EXIT_FAILURE);
+			mnt_error("Error: timeout.");
 	}
-	else
-		ft_dprintf(2, "Usage: client [server PID] [string].\n");
 	return (0);
 }

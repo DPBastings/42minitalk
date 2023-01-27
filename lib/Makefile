@@ -15,7 +15,7 @@ endef
 all: $(LIB_ARCS) $(LIB_HDRS)
 
 %.a:
-	$(MAKE) --directory=./$(basename $@)/
+	@$(MAKE) --directory=./$(basename $@)/
 	@ln -fs ./$(basename $@)/$@ ./$@
 
 %.h:

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_exit.c                                          :+:    :+:            */
+/*   mnt_error.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/23 15:11:15 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/23 15:12:22 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/27 12:21:26 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "libftprintf.h"
 #include <stdlib.h>
 
-void	ft_exit(char const *message, int status)
+void	mnt_error(char const *message)
 {
 	ft_dprintf(2, "%s\n", message);
-	exit(status);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: dbasting <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 12:19:05 by dbasting      #+#    #+#                 */
-/*   Updated: 2023/01/23 15:24:59 by dbasting      ########   odam.nl         */
+/*   Updated: 2023/01/27 12:16:25 by dbasting      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	catch_header(int signum)
 		if (g_inbox->packet->data == NULL)
 		{
 			free(g_inbox);
-			ft_exit("Error: couldn't allocate message buffer.", EXIT_FAILURE);
+			mnt_error("Error: couldn't allocate message buffer.");
 		}
 	}
 }

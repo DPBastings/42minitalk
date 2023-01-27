@@ -6,7 +6,7 @@
 #    By: dbasting <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/12/28 12:06:53 by dbasting      #+#    #+#                  #
-#    Updated: 2023/01/23 15:12:53 by dbasting      ########   odam.nl          #
+#    Updated: 2023/01/27 12:24:34 by dbasting      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ SRV_NAME := server
 NAME := minitalk
 
 SRC_FILES_COMMON := byteops.c\
-	ft_exit.c\
-	send.c
+	mnt_error.c
 OBJ_FILES_COMMON := $(SRC_FILES_COMMON:.c=.o)
 HDR_FILES := byteops.h\
 	comm.h
@@ -24,7 +23,8 @@ LIB_FILES := libft.a\
 	libftprintf.a
 
 SRC_FILES_CLT := $(SRC_FILES_COMMON)\
-	client.c
+	client.c\
+	send.c
 OBJ_FILES_CLT := $(SRC_FILES_CLT:.c=.o)
 SRC_FILES_SRV := $(SRC_FILES_COMMON)\
 	server.c\
