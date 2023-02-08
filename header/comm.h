@@ -16,7 +16,8 @@
 # include <stddef.h>
 # include <sys/types.h>
 
-# define TIMEOUT 5
+# define USLEEP_SEND	150
+# define SLEEP_TIMEOUT	5
 
 typedef struct s_pheader
 {

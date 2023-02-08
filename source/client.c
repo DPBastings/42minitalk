@@ -39,7 +39,7 @@ int	main(int argc, char **argv)
 	if (argv[2][0] != '\0')
 	{
 		send(server_pid, &packet);
-		if (!sleep(TIMEOUT))
+		if (!sleep(SLEEP_TIMEOUT))
 			mnt_error("Error: timeout.");
 	}
 	return (0);

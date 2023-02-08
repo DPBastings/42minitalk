@@ -36,7 +36,7 @@ void	send_bytes(pid_t process, void *bytes, size_t size)
 			else
 				kill(process, SIGUSR1);
 			bitshift_r(&mask, sizeof(unsigned char));
-			usleep(150);
+			usleep(USLEEP_SEND);
 		}
 		byte++;
 	}
