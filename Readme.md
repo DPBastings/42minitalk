@@ -62,4 +62,4 @@ Internally, the client transmits the message by evaluating every bit that's in i
 
 ## Other
 
-On slower systems, it may be necessary to increase the interval between signals sent by the client in order to prevent the server from crashing. To do this, adjust the value of the USLEEP\_SEND macro in ./header/comm.h accordingly.
+On slower systems, it may be necessary to increase the interval between signals sent by the client in order to prevent the server from crashing. To do this, adjust the value of the `USLEEP_SEND` macro in `./header/comm.h` accordingly.
